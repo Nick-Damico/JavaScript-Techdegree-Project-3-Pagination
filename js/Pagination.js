@@ -5,7 +5,7 @@ class Pagination {
     itemSelector:   '.student-item'
   }) {
     this._parent   = document.querySelector(options.parentSelector);
-    this._students = document.querySelectorAll(options.itemSelector);
+    this._items = document.querySelectorAll(options.itemSelector);
 
     // Set instance state to keep track of the currently viewed page and number of students to filter by
     this.state = {
@@ -18,8 +18,16 @@ class Pagination {
     return this._parent;
   }
 
-  getStudents() {
-    return this._students;
+  getItems() {
+    return this._items;
+  }
+
+  numberOfItems() {
+    return this.getItems().length;
+  }
+
+  numberOfPages() {
+    return Math.ceil( this.numberOfItems() / this.state.resultsPerPage );
   }
 }
 
