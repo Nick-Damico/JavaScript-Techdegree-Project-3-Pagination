@@ -6,6 +6,18 @@ JS Pagination and Search Project
   Solution to challenge is implemented with ES6 Class Syntax located in ./js/Pagination.js, ./js/App.js
 
   Specific Requirements below
+
+## Usage
+  To work on Project of view locally, fork or `git clone https://github.com/Nick-Damico/JavaScript-Techdegree-Project-3-Pagination`
+
+  `cd into ./JavaScript-Techdegree-Project-3-Pagination` directory. Due to ES6 import statements being used in
+  ./js/App.js you will need to start a web server to view working example of the project.
+
+  This avoids the error `Access to Script at './Pagination/pagination-filter/js/App.js' from origin 'null' has been blocked by CORS policy: Invalid response. Origin 'null' is therefore not allowed access.`
+
+  Start Server with: `We could easily start a web server by using python:
+python -m SimpleHTTPServer 8000`
+
 ## Requirements
 
 - [] Use the filters-example.html file to guide your decision making. Using progressive enhancement, your work should affect the index.html file.
