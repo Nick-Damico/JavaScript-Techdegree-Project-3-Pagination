@@ -8,7 +8,7 @@ JS Pagination and Search Project
   Specific Requirements below
 
 ## Usage
-  To work on Project of view locally, fork or `git clone https://github.com/Nick-Damico/JavaScript-Techdegree-Project-3-Pagination`
+  To work on Project or to view locally, `fork` or `git clone https://github.com/Nick-Damico/JavaScript-Techdegree-Project-3-Pagination`
 
   `cd into ./JavaScript-Techdegree-Project-3-Pagination` directory. Due to ES6 import statements being used in
   ./js/App.js you will need to start a web server to view working example of the project.
