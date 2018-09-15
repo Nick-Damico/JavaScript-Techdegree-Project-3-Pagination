@@ -1,9 +1,17 @@
 class Pagination {
   constructor(resultsPerPage) {
-    this.parent   = document.querySelector('.page');
-    this.students = document.querySelectorAll('.student-item');
+    this._parent   = document.querySelector('.page');
+    this._students = document.querySelectorAll('.student-item');
 
-    
+
+  }
+
+  getParent() {
+    return this._parent;
+  }
+
+  getStudents() {
+    return this._students;
   }
 }
 
