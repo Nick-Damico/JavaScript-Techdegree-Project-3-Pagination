@@ -1,12 +1,12 @@
 class Pagination {
-  constructor(resultsPerPage) {
+  constructor(options={numberOfItems: 10}) {
     this._parent   = document.querySelector('.page');
     this._students = document.querySelectorAll('.student-item');
 
     // Set instance state to keep track of the currently viewed page and number of students to filter by
     this.state = {
       currentPage: 1,
-      resultsPerPage: resultsPerPage
+      resultsPerPage: options.numberOfItems
     }
   }
 
