@@ -15,8 +15,7 @@ JS Pagination and Search Project
 
   This avoids the error `Access to Script at './Pagination/pagination-filter/js/App.js' from origin 'null' has been blocked by CORS policy: Invalid response. Origin 'null' is therefore not allowed access.`
 
-  Start Server with: `We could easily start a web server by using python:
-python -m SimpleHTTPServer 8000`
+  Start Server with: `python -m SimpleHTTPServer 8000`
 
 ## Requirements
 
