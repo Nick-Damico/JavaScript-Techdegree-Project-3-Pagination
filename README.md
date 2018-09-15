@@ -1,7 +1,7 @@
 JS Pagination and Search Project
 ================================
 ## About
-  Project 3 from TeamTreehouse's JavaScript Techdegree. Create a pagination for displaying a filtered about of students on the index view page.
+  Project 3 from TeamTreehouse's JavaScript Techdegree. Create a pagination for limiting the number of displayed student elements on the index view page with a numbered page navigation element at the bottom of the page.
 
   Solution to challenge is implemented with ES6 Class Syntax located in ./js/Pagination.js, ./js/App.js
 
