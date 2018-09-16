@@ -11,7 +11,6 @@ class Pagination {
     this._items = document.querySelectorAll(options.itemSelector);
     this._searchContainer = document.querySelector(options.parentSearchSelector);
     // Bind instance to #filterPage method
-    this.filterPage = this.filterPage.bind(this);
     this.filterOnSubmit = this.filterOnSubmit.bind(this);
     // Set instance state to keep track of the currently viewed page and number of students to filter by
     this.state = {
@@ -24,10 +23,10 @@ class Pagination {
 
   init() {
     // invoke filterPage(), appendPagination, attach event listener to pagination
-    this.appendPagination().addEventListener('click', this.filterPage);
-    // Append dynamic search filter into DOM '.page-header'
+    this.activateItems();
     this.appendSearchField().addEventListener('click', this.filterOnSubmit);
-    this.filterPage();
+    this.appendPagination().addEventListener('click', this.filterOnSubmit);
+    this.filterOnSubmit();
   }
 
   getParent() {
@@ -42,12 +41,19 @@ class Pagination {
     return this._items;
   }
 
+  getActiveItems() {
+    // converts nodelist to array for calling .filter array method on
+    const arrayItems = Array.prototype.slice.call(this.getItems());
+    const activeItems = arrayItems.filter(item => item.classList.contains('active'));
+    return activeItems;
+  }
+
   numberOfItems() {
     return this.getItems().length;
   }
 
   numberOfPages() {
-    return Math.ceil( this.numberOfItems() / this.state.resultsPerPage );
+    return Math.ceil( this.getActiveItems().length / this.state.resultsPerPage );
   }
 
   appendPagination() {
@@ -56,6 +62,10 @@ class Pagination {
 
     this.getParent().appendChild(pagination);
     return pagination;
+  }
+
+  updatePagination() {
+    document.querySelector('.pagination').innerHTML = this.createPaginationNumbers();
   }
 
   createPaginationNode() {
@@ -104,25 +114,54 @@ class Pagination {
     return { input: input, button: button };
   }
 
-  filterPage(evt) {
+  filterItemsOnText(text) {
+    this.getItems().forEach((item, index) => {
+      const name = item.querySelector('h3').textContent;
+      const email = item.querySelector('.email').textContent;
+
+      if ((name.indexOf(text) !== -1 || email.indexOf(text) !== -1)) {
+        !item.classList.contains('active') ? item.className += ' active' : null;
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  }
+
+  hideNoneActiveItems() {
+    this.getItems().forEach(item => {
+      if(!item.classList.contains('active')){
+        $(item).fadeOut();
+      }
+    })
+  }
+
+  activateItems() {
+    this.getItems().forEach(item => item.className += ' active');
+  }
+
+  filterOnSubmit(evt) {
     if (evt) {
       evt.preventDefault();
-      // update state with new current page number using element attr data-pgnum
-      this.updateState({ currentPage: parseInt(evt.target.getAttribute('data-pgnum')) })
+      if(evt.srcElement.getAttribute('type') === 'submit') {
+        const inputText = evt.target.previousSibling.value.toLowerCase();
+        this.filterItemsOnText(inputText);
+      } else if (evt.target.getAttribute('data-pgnum')) {
+        this.updateState({ currentPage: parseInt(evt.target.getAttribute('data-pgnum')) })
+      }
     }
-    // calculate range of items that will display, if index of items fall outside of this range hide elements from view.
-    const rangeEnd = this.state.currentPage * this.state.resultsPerPage;
-    const rangeStart = rangeEnd - this.state.resultsPerPage;
 
-    this.getItems().forEach((item,index) => {
-      if (index >= rangeStart && index < rangeEnd) {
+    this.updatePagination();
+    this.hideNoneActiveItems();
+    this.getActiveItems().forEach((item, index) => {
+      // calculate range of items that will display, if index of items fall outside of this range hide elements from view.
+      const rangeEnd = this.state.currentPage * this.state.resultsPerPage;
+      const rangeStart = rangeEnd - this.state.resultsPerPage;
+      if ((index >= rangeStart && index < rangeEnd) && item.classList.contains('active')) {
         $(item).fadeIn();
       } else {
         $(item).fadeOut();
       }
     });
-
-    return this.getItems();
   }
 
   updateState(state) {
@@ -130,7 +169,6 @@ class Pagination {
       ...this.state,
       ...state
     }
-    console.log(this.state);
   }
 }
 
