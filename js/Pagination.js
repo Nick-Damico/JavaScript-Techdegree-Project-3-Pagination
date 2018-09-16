@@ -14,6 +14,7 @@ class Pagination {
       resultsPerPage: options.numberOfItems
     }
     // invoke filterPage() method on initialization of Pagination
+    this.appendPagination();
     this.filterPage();
   }
 
@@ -31,6 +32,25 @@ class Pagination {
 
   numberOfPages() {
     return Math.ceil( this.numberOfItems() / this.state.resultsPerPage );
+  }
+
+  createPaginationNode() {
+    // create element node
+    const paginationNode = document.createElement('div');
+    // add class 'pagination' to node
+    paginationNode.className = 'pagination';
+
+    return paginationNode;
+  }
+
+  createPaginationNumbers() {
+    let paginationNumbers = '';
+    // append page numbers to pagaintion
+    for (let i = 1; i <= this.numberOfPages(); i++) {
+      paginationNumbers += `<li><a href="">${i}</a></li>`;
+    }
+
+    return paginationNumbers;
   }
 
   filterPage(evt) {
