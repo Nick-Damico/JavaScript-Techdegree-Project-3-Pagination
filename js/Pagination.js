@@ -6,12 +6,15 @@ class Pagination {
   }) {
     this._parent   = document.querySelector(options.parentSelector);
     this._items = document.querySelectorAll(options.itemSelector);
-
+    // Bind (instance) to this on method calls
+    this.filterPage = this.filterPage.bind(this);
     // Set instance state to keep track of the currently viewed page and number of students to filter by
     this.state = {
       currentPage: 1,
       resultsPerPage: options.numberOfItems
     }
+    // invoke filterPage() method on initialization of Pagination
+    this.filterPage();
   }
 
   getParent() {
@@ -28,6 +31,10 @@ class Pagination {
 
   numberOfPages() {
     return Math.ceil( this.numberOfItems() / this.state.resultsPerPage );
+  }
+
+  filterPage(evt) {
+    
   }
 }
 
