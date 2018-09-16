@@ -34,7 +34,22 @@ class Pagination {
   }
 
   filterPage(evt) {
-    
+    evt ? evt.preventDefault() : null;
+    // calculate range of items that will display, if index of items fall outside of this range hide elements from view.
+    const rangeEnd = this.state.currentPage * this.state.resultsPerPage;
+    const rangeStart = rangeEnd - this.state.resultsPerPage;
+
+    this.getItems().forEach((item,index) => {
+      if (index >= rangeStart && index < rangeEnd) {
+        item.className += ' active';
+        $(item).show();
+      } else {
+        item.className === 'active' ? item.classList.remove('active') : null;
+        $(item).hide();
+      }
+    });
+
+    return this.getItems();
   }
 }
 
