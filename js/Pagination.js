@@ -4,7 +4,8 @@ class Pagination {
   constructor(options={
     numberOfItems: 10,
     parentSelector: '.page',
-    itemSelector:   '.student-item'
+    itemSelector:   '.student-item',
+    parentSearchSelector: '.page-header'
   }) {
     this._parent   = document.querySelector(options.parentSelector);
     this._items = document.querySelectorAll(options.itemSelector);
@@ -66,6 +67,13 @@ class Pagination {
     }
 
     return paginationNumbers;
+  }
+
+  createSearchDivNode() {
+    const studentSearchDiv = document.createElement('div');
+    studentSearchDiv.className = 'student-search';
+
+    return studentSearchDiv;
   }
 
   filterPage(evt) {
