@@ -53,6 +53,13 @@ class Pagination {
     return paginationNumbers;
   }
 
+  appendPagination() {
+    const pagination = this.createPaginationNode();
+    pagination.innerHTML = this.createPaginationNumbers();
+
+    this.getParent().appendChild(pagination);
+  }
+
   filterPage(evt) {
     evt ? evt.preventDefault() : null;
     // calculate range of items that will display, if index of items fall outside of this range hide elements from view.
