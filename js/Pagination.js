@@ -9,8 +9,10 @@ class Pagination {
   }) {
     this._parent   = document.querySelector(options.parentSelector);
     this._items = document.querySelectorAll(options.itemSelector);
+    this._searchContainer = document.querySelector(options.parentSearchSelector);
     // Bind instance to #filterPage method
     this.filterPage = this.filterPage.bind(this);
+    this.filterOnSubmit = this.filterOnSubmit.bind(this);
     // Set instance state to keep track of the currently viewed page and number of students to filter by
     this.state = {
       currentPage: 1,
@@ -23,11 +25,17 @@ class Pagination {
   init() {
     // invoke filterPage(), appendPagination, attach event listener to pagination
     this.appendPagination().addEventListener('click', this.filterPage);
+    // Append dynamic search filter into DOM '.page-header'
+    this.appendSearchField().addEventListener('click', this.filterOnSubmit);
     this.filterPage();
   }
 
   getParent() {
     return this._parent;
+  }
+
+  getSearchContainer() {
+    return this._searchContainer;
   }
 
   getItems() {
@@ -69,11 +77,31 @@ class Pagination {
     return paginationNumbers;
   }
 
+  appendSearchField() {
+    const searchDiv = this.createSearchDivNode();
+    const searchFields = this.createSearchField();
+    const searchInput = searchFields.input;
+    const searchButton = searchFields.button;
+    searchDiv.innerHTML = searchInput;
+    searchDiv.innerHTML += searchButton;
+
+    document.querySelector('.page-header').appendChild(searchDiv);
+
+    return searchDiv;
+  }
+
   createSearchDivNode() {
-    const studentSearchDiv = document.createElement('div');
+    const studentSearchDiv = document.createElement('form');
     studentSearchDiv.className = 'student-search';
 
     return studentSearchDiv;
+  }
+
+  createSearchField() {
+    const input = `<input class="search-student" placeholder="Search for students..." />`;
+    const button = `<button type="submit">Search</button>`;
+
+    return { input: input, button: button };
   }
 
   filterPage(evt) {
@@ -88,10 +116,8 @@ class Pagination {
 
     this.getItems().forEach((item,index) => {
       if (index >= rangeStart && index < rangeEnd) {
-        item.className += ' active';
         $(item).fadeIn();
       } else {
-        item.className === 'active' ? item.classList.remove('active') : null;
         $(item).fadeOut();
       }
     });
