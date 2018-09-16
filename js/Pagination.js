@@ -81,10 +81,10 @@ class Pagination {
     this.getItems().forEach((item,index) => {
       if (index >= rangeStart && index < rangeEnd) {
         item.className += ' active';
-        $(item).show();
+        $(item).fadeIn();
       } else {
         item.className === 'active' ? item.classList.remove('active') : null;
-        $(item).hide();
+        $(item).fadeOut();
       }
     });
 
