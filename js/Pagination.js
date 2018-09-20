@@ -26,7 +26,9 @@ class Pagination {
     // Adds class 'active' to all elements, className is used for filtering.
     this.activateAllItems();
     // Append search input element and button with attached event listener
-    this.appendSearchField().addEventListener('click', this.filterResults);
+    const searchField = this.appendSearchField();
+    searchField.addEventListener('click', this.filterResults);
+    searchField.addEventListener('keyup', this.filterResults);
     // Append pagination numbered page list at bottom of DOM with attached event listener
     this.appendPagination().addEventListener('click', this.filterResults);
     // Filter results
@@ -144,12 +146,21 @@ class Pagination {
     this.getItems().forEach(item => item.className += ' active');
   }
 
+  typeOfEvent(evt) {
+    return evt.srcElement.getAttribute('type');
+  }
+
   filterResults(evt) {
     if (evt) {
       evt.preventDefault();
+      let inputText;
       if (evt.srcElement.getAttribute('type') === 'submit') {
-        const inputText = evt.target.previousSibling.value.toLowerCase();
+        inputText = evt.target.previousSibling.value.toLowerCase();
         this.updateState({ currentPage: 1})
+        this.filterItemsOnText(inputText);
+      } else if(evt.srcElement.getAttribute('class') === 'search-student'){
+        inputText = evt.srcElement.value.toLowerCase();
+        this.updateState({currentPage: 1});
         this.filterItemsOnText(inputText);
       } else if (evt.target.getAttribute('data-pgnum')) {
         this.updateState({
@@ -157,7 +168,6 @@ class Pagination {
         })
       }
     }
-    console.log(this.state.currentPage);
     this.updatePagination();
     this.hideNoneActiveItems();
     this.getActiveItems().forEach((item, index) => {
