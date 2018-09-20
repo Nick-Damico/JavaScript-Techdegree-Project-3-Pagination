@@ -21,11 +21,15 @@ class Pagination {
     this.init();
   }
 
+  // Initialize Pagination into DOM
   init() {
-    // invoke filterPage(), appendPagination, attach event listener to pagination
+    // Adds class 'active' to all elements, className is used for filtering.
     this.activateItems();
+    // Append search input element and button with attached event listener
     this.appendSearchField().addEventListener('click', this.filterResults);
+    // Append pagination numbered page list at bottom of DOM with attached event listener
     this.appendPagination().addEventListener('click', this.filterResults);
+    // Filter results
     this.filterResults();
   }
 
@@ -145,6 +149,7 @@ class Pagination {
       evt.preventDefault();
       if (evt.srcElement.getAttribute('type') === 'submit') {
         const inputText = evt.target.previousSibling.value.toLowerCase();
+        this.updateState({ currentPage: 1})
         this.filterItemsOnText(inputText);
       } else if (evt.target.getAttribute('data-pgnum')) {
         this.updateState({
@@ -152,6 +157,7 @@ class Pagination {
         })
       }
     }
+    console.log(this.state.currentPage);
     this.updatePagination();
     this.hideNoneActiveItems();
     this.getActiveItems().forEach((item, index) => {
