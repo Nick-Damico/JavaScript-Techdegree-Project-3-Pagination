@@ -24,7 +24,7 @@ class Pagination {
   // Initialize Pagination into DOM
   init() {
     // Adds class 'active' to all elements, className is used for filtering.
-    this.activateItems();
+    this.activateAllItems();
     // Append search input element and button with attached event listener
     this.appendSearchField().addEventListener('click', this.filterResults);
     // Append pagination numbered page list at bottom of DOM with attached event listener
@@ -140,7 +140,7 @@ class Pagination {
     })
   }
 
-  activateItems() {
+  activateAllItems() {
     this.getItems().forEach(item => item.className += ' active');
   }
 
