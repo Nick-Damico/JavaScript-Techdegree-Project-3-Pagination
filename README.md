@@ -3,9 +3,11 @@ JS Pagination and Search Project
 ## About
   Project 3 from TeamTreehouse's JavaScript Techdegree. Create a pagination for limiting the number of displayed student elements on the index view page with a numbered page navigation element at the bottom of the page.
 
-  Solution to challenge is implemented with ES6 Class Syntax located in ./js/Pagination.js, ./js/App.js
+  Solution to challenge is implemented with ES6 Class Syntax located in:
+  `./js/Pagination.js`,
+  `./js/App.js`
 
-  Specific Requirements below
+  Project Completed.
 
 ## Usage
   To work on Project or to view locally, `fork` or `git clone https://github.com/Nick-Damico/JavaScript-Techdegree-Project-3-Pagination`
@@ -44,7 +46,7 @@ JS Pagination and Search Project
 
 - [X] As the user types in the search box, dynamically filter the student listings. In other words, after each letter is typed into the search box, display any listings that match .
 
-- [] If no matches are found, include a message in the HTML to tell the user there are no matches.
+- [X] If no matches are found, include a message in the HTML to tell the user there are no matches.
 
 # View Project
-[Live Demo]() of this project for peer review.
+[Live Demo](https://nick-damico.github.io/JavaScript-Techdegree-Project-3-Pagination/) of this project for peer review.
