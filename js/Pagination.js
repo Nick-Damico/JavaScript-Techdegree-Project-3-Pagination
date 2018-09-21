@@ -170,8 +170,9 @@ class Pagination {
     }
     this.updatePagination();
     this.hideNoneActiveItems();
-    if (this.getActiveItems().length > 0) {
-      this.getActiveItems().forEach((item, index) => {
+    const activeItemsArray = this.getActiveItems();
+    if (activeItemsArray.length > 0) {
+      activeItemsArray.forEach((item, index) => {
         // calculate range of items that will display, if index of items fall outside of this range hide elements from view.
         const rangeEnd = this.state.currentPage * this.state.resultsPerPage;
         const rangeStart = rangeEnd - this.state.resultsPerPage;
@@ -181,7 +182,7 @@ class Pagination {
           $(item).fadeOut();
         }
       });
-      $('.page-header h2').text('Students');
+      $('.page-header h2').text(`${activeItemsArray.length} Students`);
     } else {
       $('.page-header h2').text('No Matches');
     }
