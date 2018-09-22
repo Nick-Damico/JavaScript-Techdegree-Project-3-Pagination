@@ -3,5 +3,6 @@ import Pagination from './Pagination.js';
 const pagination = new Pagination({
   numberOfItems: 10,
   parentSelector: '.page',
-  itemSelector:  '.student-item'
+  itemSelector:  '.student-item',
+  inputPlaceHolderText: 'Search for students...'
 });

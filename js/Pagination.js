@@ -5,11 +5,13 @@ class Pagination {
     numberOfItems: 10,
     parentSelector: '.page',
     itemSelector: '.student-item',
-    parentSearchSelector: '.page-header'
+    parentSearchSelector: '.page-header',
+    inputPlaceHolderText: 'Search for items'
   }) {
     this._parent = document.querySelector(options.parentSelector);
     this._items = document.querySelectorAll(options.itemSelector);
     this._searchContainer = document.querySelector(options.parentSearchSelector);
+    this._inputPlaceHolder = options.inputPlaceHolderText;
     // Bind instance to #filterPage method
     this.filterResults = this.filterResults.bind(this);
     // Set instance state to keep track of the currently viewed page and number of students to filter by
@@ -55,6 +57,10 @@ class Pagination {
 
   getItems() {
     return this._items;
+  }
+
+  getPlaceHolderText() {
+    return this._inputPlaceHolder;
   }
 
 
@@ -148,7 +154,7 @@ class Pagination {
   }
 
   createSearchField() {
-    const input = `<input class="search-student" placeholder="Search for students..." />`;
+    const input = `<input class="search-item" placeholder="${this.getPlaceHolderText()}" />`;
     const button = `<button type="submit">Search</button>`;
 
     return {input: input, button: button};
@@ -172,7 +178,7 @@ class Pagination {
         inputText = evt.target.previousSibling.value.toLowerCase();
         this.updateState({ currentPage: 1})
         this.filterItemsOnText(inputText);
-      } else if(evt.srcElement.getAttribute('class') === 'search-student'){
+      } else if(evt.srcElement.getAttribute('class') === 'search-item'){
         inputText = evt.srcElement.value.toLowerCase();
         this.updateState({currentPage: 1});
         this.filterItemsOnText(inputText);
