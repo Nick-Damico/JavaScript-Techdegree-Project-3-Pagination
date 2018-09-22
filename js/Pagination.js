@@ -35,6 +35,16 @@ class Pagination {
     this.filterResults();
   }
 
+  updateState(state) {
+    this.state = {
+      ...this.state,
+      ...state
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // GETTER Methods for Instance Variables
+  //////////////////////////////////////////////////////////////////////////////
   getParent() {
     return this._parent;
   }
@@ -47,11 +57,28 @@ class Pagination {
     return this._items;
   }
 
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Instance Helper Methods
+  //////////////////////////////////////////////////////////////////////////////
+
+  activateAllItems() {
+    this.getItems().forEach(item => item.className += ' active');
+  }
+
   getActiveItems() {
     // converts nodelist to array for calling .filter array method on
     const arrayItems = Array.prototype.slice.call(this.getItems());
     const activeItems = arrayItems.filter(item => item.classList.contains('active'));
     return activeItems;
+  }
+
+  hideNoneActiveItems() {
+    this.getItems().forEach(item => {
+      if (!item.classList.contains('active')) {
+        $(item).fadeOut();
+      }
+    })
   }
 
   numberOfItems() {
@@ -62,16 +89,16 @@ class Pagination {
     return Math.ceil(this.getActiveItems().length / this.state.resultsPerPage);
   }
 
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Instance Methods Building Number Pagination bottom of .pagination div
+  //////////////////////////////////////////////////////////////////////////////
   appendPagination() {
     const pagination = this.createPaginationNode();
     pagination.innerHTML = this.createPaginationNumbers();
 
     this.getParent().appendChild(pagination);
     return pagination;
-  }
-
-  updatePagination() {
-    document.querySelector('.pagination').innerHTML = this.createPaginationNumbers();
   }
 
   createPaginationNode() {
@@ -93,6 +120,14 @@ class Pagination {
     return paginationNumbers;
   }
 
+  updatePagination() {
+    document.querySelector('.pagination').innerHTML = this.createPaginationNumbers();
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Instance Methods Building input and search fields top of .pagination div
+  //////////////////////////////////////////////////////////////////////////////
   appendSearchField() {
     const searchDiv = this.createSearchDivNode();
     const searchFields = this.createSearchField();
@@ -119,33 +154,10 @@ class Pagination {
     return {input: input, button: button};
   }
 
-  filterItemsOnText(text) {
-    this.getItems().forEach((item, index) => {
-      const name = item.querySelector('h3').textContent;
-      const email = item.querySelector('.email').textContent;
 
-      if ((name.indexOf(text) !== -1 || email.indexOf(text) !== -1)) {
-        !item.classList.contains('active')
-          ? item.className += ' active'
-          : null;
-      } else {
-        item.classList.remove('active');
-      }
-    });
-  }
-
-  hideNoneActiveItems() {
-    this.getItems().forEach(item => {
-      if (!item.classList.contains('active')) {
-        $(item).fadeOut();
-      }
-    })
-  }
-
-  activateAllItems() {
-    this.getItems().forEach(item => item.className += ' active');
-  }
-
+  //////////////////////////////////////////////////////////////////////////////
+  // Instance Methods filters items and presents listings
+  //////////////////////////////////////////////////////////////////////////////
   eventHandlerReducer(evt) {
     // filterResults() handles filtering items for several types of events,
     // input on typing, input value on 'search' button click, and
@@ -173,6 +185,21 @@ class Pagination {
     return evt;
   }
 
+  filterItemsOnText(text) {
+    this.getItems().forEach((item, index) => {
+      const name = item.querySelector('h3').textContent;
+      const email = item.querySelector('.email').textContent;
+
+      if ((name.indexOf(text) !== -1 || email.indexOf(text) !== -1)) {
+        !item.classList.contains('active')
+          ? item.className += ' active'
+          : null;
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  }
+
   filterResults(evt) {
     this.eventHandlerReducer(evt);
     this.updatePagination();
@@ -192,13 +219,6 @@ class Pagination {
       $('.page-header h2').text(`${activeItemsArray.length} Students`);
     } else {
       $('.page-header h2').text('No Matches');
-    }
-  }
-
-  updateState(state) {
-    this.state = {
-      ...this.state,
-      ...state
     }
   }
 }
