@@ -146,12 +146,14 @@ class Pagination {
     this.getItems().forEach(item => item.className += ' active');
   }
 
-  typeOfEvent(evt) {
-    return evt.srcElement.getAttribute('type');
-  }
-
-  filterResults(evt) {
-    if (evt) {
+  eventHandlerReducer(evt) {
+    // filterResults() handles filtering items for several types of events,
+    // input on typing, input value on 'search' button click, and
+    // using pagination page numbers. This method introspects on that evt action
+    // determining the type of event and handling particular tasks for that evt type.
+    if (!evt) {
+      return null;
+    } else {
       evt.preventDefault();
       let inputText;
       if (evt.srcElement.getAttribute('type') === 'submit') {
@@ -168,6 +170,11 @@ class Pagination {
         })
       }
     }
+    return evt;
+  }
+
+  filterResults(evt) {
+    this.eventHandlerReducer(evt);
     this.updatePagination();
     this.hideNoneActiveItems();
     const activeItemsArray = this.getActiveItems();
