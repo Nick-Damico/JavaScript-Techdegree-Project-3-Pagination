@@ -8,6 +8,7 @@ class Pagination {
     parentSearchSelector: '.page-header',
     inputPlaceHolderText: 'Search for items'
   }) {
+    
     this._parent = document.querySelector(options.parentSelector);
     this._items = document.querySelectorAll(options.itemSelector);
     this._searchContainer = document.querySelector(options.parentSearchSelector);
